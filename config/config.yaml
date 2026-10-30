@@ -1,0 +1,12 @@
+program:
+  name: "Model Execution Program"
+  default_model: "1"
+  default_test: "1"
+
+paths:
+  data_directory: "data"
+  model_directory: "models"
+
+execution:
+  interactive: true
+  validate_input_file: true

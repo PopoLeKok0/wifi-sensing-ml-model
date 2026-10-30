@@ -1,0 +1,16 @@
+tests:
+  "1":
+    name: "Test 1"
+    description: "First test"
+
+  "2":
+    name: "Test 2"
+    description: "Second test"
+
+  "3":
+    name: "Test 3"
+    description: "Third test"
+
+  "4":
+    name: "Test 4"
+    description: "Fourth test"

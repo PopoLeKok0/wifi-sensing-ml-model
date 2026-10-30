@@ -1,0 +1,20 @@
+models:
+  "1":
+    name: "CNN"
+    module: "CNN"
+    description: "Convolutional Neural Network"
+
+  "2":
+    name: "CNN_1_Extended"
+    module: "CNN_1_Extended"
+    description: "Extended Convolutional Neural Network"
+
+  "3":
+    name: "RF"
+    module: "RF"
+    description: "Random Forest"
+
+  "4":
+    name: "RF_extended"
+    module: "RF_extended"
+    description: "Extended Random Forest"

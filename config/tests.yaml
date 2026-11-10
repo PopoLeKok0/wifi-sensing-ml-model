@@ -2,15 +2,19 @@ tests:
   "1":
     name: "Test 1"
     description: "First test"
+    data_file: data/UT_HAR/data/X_test.csv
 
   "2":
     name: "Test 2"
     description: "Second test"
+    data_file: data/UT_HAR/data/X_test.csv
 
   "3":
     name: "Test 3"
     description: "Third test"
+    data_file: data/UT_HAR/data/X_test.csv
 
   "4":
     name: "Test 4"
     description: "Fourth test"
+    data_file: data/UT_HAR/data/X_test.csv

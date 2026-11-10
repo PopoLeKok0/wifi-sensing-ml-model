@@ -48,12 +48,28 @@ def display_options(options, title):
     print("Ctrl+D to exit.")
 
 # Execute selected model
-def execute_model(model_id, test_id, filename):
+def execute_model(model_id, test_id):
 
     model = models[model_id]
     test = tests[test_id]
 
     module_name = model["module"]
+
+    # Get data file from test configuration
+    filename = Path(test["data_file"]).expanduser()
+
+    if not filename.is_absolute():
+        filename = BASE_DIR / filename
+
+    filename = filename.resolve()
+
+    # Validate data file
+    if execution.get("validate_input_file", True):
+
+        if not filename.is_file():
+            raise FileNotFoundError(
+                f"Data file not found: {filename}"
+            )
 
     print("\nExecuting:")
     print(f"Model: {model['name']}")
@@ -68,14 +84,12 @@ def execute_model(model_id, test_id, filename):
     module = importlib.import_module(module_name)
 
     # Execute model
-    # Each model module must implement a run() function.
     module.run(
         data_file=filename,
         test_config=test
     )
 
     print("\nFinished")
-
 
 # Main program
 def main():
@@ -86,7 +100,6 @@ def main():
 
     selected_model = None
     selected_test = None
-    selected_filename = None
 
     while True:
 
@@ -110,36 +123,8 @@ def main():
                     continue
 
                 selected_model = choice
-                state = "data"
-
-            # Select data file
-            elif state == "data":
-
-                filename = input("\nEnter filename/path: ").strip()
-
-                if not filename:
-                    print("Filename cannot be empty.")
-                    continue
-
-                selected_filename = Path(filename).expanduser()
-
-                if not selected_filename.is_absolute():
-                    selected_filename = (
-                        BASE_DIR / selected_filename
-                    )
-
-                selected_filename = selected_filename.resolve()
-
-                if execution.get("validate_input_file", True):
-
-                    if not selected_filename.is_file():
-                        print(
-                            "File does not exist or is not a regular file: "
-                            f"{selected_filename}"
-                        )
-                        continue
-
                 state = "test"
+
 
             # Select test
             elif state == "test":
@@ -162,19 +147,18 @@ def main():
                 selected_test = choice
                 state = "execute"
 
+
             # Execute selected model and test
             elif state == "execute":
 
                 execute_model(
                     model_id=selected_model,
-                    test_id=selected_test,
-                    filename=selected_filename
+                    test_id=selected_test
                 )
 
                 # Reset selections
                 selected_model = None
                 selected_test = None
-                selected_filename = None
 
                 state = "model"
 
@@ -191,7 +175,6 @@ def main():
             # Return to model selection
             selected_model = None
             selected_test = None
-            selected_filename = None
 
             state = "model"
 
